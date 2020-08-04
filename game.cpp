@@ -20,6 +20,23 @@ game::game(void) {
 	board[4][3] = 'w';
 }
 
+// check that the tile is on the board.
+bool game::is_valid_tile(int row, int col) {
+	if ( ! ( 0 <= row && row < 8 )) return false;
+	if ( ! ( 0 <= col && col < 8 )) return false;
+
+	return true;
+}
+
+// check that the tile is unoccupied.
+bool game::is_unoccupied_tile(int row, int col) {
+	if ( board[row][col] != ' ' ) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 void game::print_board(void) {
 
 	// Ideally replace these with
