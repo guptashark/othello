@@ -4,6 +4,7 @@
 class game {
 	private:
 		char board[8][8];
+		bool is_marked;
 
 		// tile validations.
 
@@ -13,8 +14,6 @@ class game {
 		// check that the tile is unoccupied.
 		// Assumption: the tile indicated is valid.
 		bool is_unoccupied_tile(int row, int col);
-
-		char opponent_tile(char c);
 
 		// return the number of tiles flipped in the
 		// specified direction if a tile of color c
@@ -33,8 +32,15 @@ class game {
 		analyze_move
 		(int row, int col, char c);
 
+		int set_disk_directional
+		(int row, int col, char c, int d_r, int d_c);
+
+		void clear_marks(void);
+
 	public:
 		game(void);
+
+		char opponent_tile(char c);
 
 		void print_board(void);
 
@@ -42,6 +48,11 @@ class game {
 		// for someone placing a tile of color c.
 		void
 		mark_possible_moves(char c);
+
+		// actually place a disk on the board.
+		bool
+		set_disk(int row, int col, char c);
+
 		friend void
 		test_is_valid_tile(void);
 
