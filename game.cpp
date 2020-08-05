@@ -37,6 +37,93 @@ bool game::is_unoccupied_tile(int row, int col) {
 	}
 }
 
+char game::opponent_tile(char c) {
+	if ( c == 'b') {
+		return 'w';
+	} else {
+		return 'b';
+	}
+}
+
+int game::analyze_direction
+(int row, int col, char c, int d_r, int d_c) {
+
+	int score = 0;
+
+	row = row + d_r;
+	col = col + d_c;
+
+	while ( is_valid_tile(row, col)) {
+
+		if ( is_unoccupied_tile(row, col)) return 0;
+		if ( board[row][col] == c ) return score;
+
+		score++;
+		row = row + d_r;
+		col = col + d_c;
+	}
+
+	// if we exit the loop, then we've run off the
+	// board and the score is 0.
+	return 0;
+}
+
+void game::mark_possible_moves(char c) {
+
+	char marked_tiles[8][8];
+
+	for(int i = 0; i < 8; i++) {
+		for(int j = 0; j < 8; j++) {
+			marked_tiles[i][j] = ' ';
+		}
+	}
+
+	for ( int i = 0; i < 8; i++) {
+		for ( int j = 0; j < 8; j++) {
+
+			int score = 0;
+
+			if ( is_unoccupied_tile(i, j) ) {
+				score = analyze_move(i, j, c);
+			}
+
+			if ( score > 0 ) {
+				marked_tiles[i][j] = 'O';
+			}
+		}
+	}
+
+	// now, mark the actual board.
+	for ( int i = 0; i < 8; i++) {
+		for ( int j = 0; j < 8; j++) {
+			if ( marked_tiles[i][j] == 'O') {
+				board[i][j] = 'O';
+			}
+		}
+	}
+}
+
+int game::analyze_move
+(int row, int col, char c) {
+
+	int score = 0;
+
+	// north west, north, north east
+	score += analyze_direction(row, col, c, -1, -1);
+	score += analyze_direction(row, col, c, -1, 0);
+	score += analyze_direction(row, col, c, -1, 1);
+
+	score += analyze_direction(row, col, c, 0, 1);
+
+	score += analyze_direction(row, col, c, 1, 1);
+	score += analyze_direction(row, col, c, 1, 0);
+	score += analyze_direction(row, col, c, 1, -1);
+
+	score += analyze_direction(row, col, c, 0, -1);
+
+	return score;
+}
+
 void game::print_board(void) {
 
 	// Ideally replace these with

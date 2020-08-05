@@ -14,6 +14,8 @@ int main(int argc, char * argv[]) {
 
 	game g;
 
+	g.mark_possible_moves('w');
+
 	g.print_board();
 
 	return 0;
