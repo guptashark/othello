@@ -13,9 +13,7 @@ int main(int argc, char * argv[]) {
 
 	char player_color = 'B';
 
-	game g;
-
-	g.mark_possible_moves(player_color);
+	game g(true);
 
 	g.print_board();
 

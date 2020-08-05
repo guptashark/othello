@@ -4,7 +4,7 @@
 class game {
 	private:
 		char board[8][8];
-		bool is_marked;
+		bool marking_enabled;
 
 		// tile validations.
 
@@ -38,7 +38,7 @@ class game {
 		void clear_marks(void);
 
 	public:
-		game(void);
+		game(bool marking_enabled);
 
 		char opponent_tile(char c);
 

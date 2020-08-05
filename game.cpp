@@ -5,7 +5,9 @@
 using std::cout;
 using std::endl;
 
-game::game(void) {
+game::game(bool marking_enabled) {
+
+	this->marking_enabled = marking_enabled;
 
 	for ( int i = 0; i < 8; i++) {
 		for ( int j = 0; j < 8; j++) {
@@ -19,7 +21,9 @@ game::game(void) {
 	board[3][4] = 'W';
 	board[4][3] = 'W';
 
-	is_marked = false;
+	if ( marking_enabled ) {
+		mark_possible_moves('B');
+	}
 }
 
 // check that the tile is on the board.
@@ -105,8 +109,6 @@ void game::mark_possible_moves(char c) {
 			}
 		}
 	}
-
-	is_marked = true;
 }
 
 void game::clear_marks(void) {
@@ -213,7 +215,7 @@ bool game::set_disk(int row, int col, char c) {
 
 	board[row][col] = c;
 
-	if ( is_marked ) {
+	if ( marking_enabled ) {
 		clear_marks();
 	}
 
