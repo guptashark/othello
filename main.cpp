@@ -1,8 +1,32 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "game.h"
 
 using namespace std;
+
+void get_input(int & row, int & col) {
+
+	cout << "Please enter a move: ";
+
+	bool valid_input = false;
+
+	do {
+		string input;
+
+		getline(cin, input);
+		stringstream ss(input);
+
+		if ( ss >> row >> col ) {
+			valid_input = true;
+		} else {
+			cout << "Please enter a valid pair of numbers: ";
+			valid_input = false;
+		}
+
+	} while ( valid_input == false );
+}
 
 int main(int argc, char * argv[]) {
 
@@ -19,12 +43,10 @@ int main(int argc, char * argv[]) {
 
 	while ( true ) {
 
-		int row = -1;
-		int col = -1;
+		int row;
+		int col;
 
-		cout << "Please enter a move: ";
-		cin >> row;
-		cin >> col;
+		get_input(row, col);
 
 		g.set_disk(row, col, player_color);
 
